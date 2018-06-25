@@ -1,0 +1,71 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "com.myapps.documentscanner"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 3
+        versionName '2.0'
+    }
+
+    signingConfigs {
+        config
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+
+        }
+    }
+    splits {
+
+        // Configures multiple APKs based on ABI.
+        abi {
+
+            // Enables building multiple APKs per ABI.
+            enable true
+
+            // By default all ABIs are included, so use reset() and include to specify that we only
+            // want APKs for x86, armeabi-v7a, and mips.
+
+            // Resets the list of ABIs that Gradle should create APKs for to none.
+            reset()
+
+            // Specifies a list of ABIs that Gradle should create APKs for.
+            include "x86", "armeabi-v7a", "mips", 'armeabi'
+
+            // Specifies that we do not want to also generate a universal APK that includes all ABIs.
+            universalApk false
+        }
+    }
+
+}
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:23.3.0'
+    implementation 'com.android.support:design:23.3.0'
+    implementation 'com.google.zxing:core:3.0.1'
+    implementation 'com.android.support:support-v4:23.3.0'
+    implementation 'com.afollestad:drag-select-recyclerview:0.3.6'
+    implementation 'com.github.nostra13:Android-Universal-Image-Loader:v1.9.5'
+    implementation 'com.github.fafaldo:fab-toolbar:1.2.0'
+    implementation 'com.google.android.gms:play-services-analytics:9.2.1'
+    implementation 'com.google.android.gms:play-services-vision:9.2.1'
+    implementation 'com.google.android.gms:play-services-appindexing:9.2.1'
+
+    implementation project(':openCVLibrary310')
+}
+
+apply plugin: 'com.google.gms.google-services'
